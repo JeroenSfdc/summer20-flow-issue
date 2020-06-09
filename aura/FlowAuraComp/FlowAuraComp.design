@@ -1,0 +1,4 @@
+<design:component>
+    <design:attribute name="InputString" label="InputString" description="Input/Output. String."/>
+    <design:attribute name="SelectedValue" label="SelectedValue" description="Input/Output. String."/>
+</design:component>

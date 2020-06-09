@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <description>Flow Lwc Comp</description>
+    <isExposed>true</isExposed>
+    <masterLabel>Flow Lwc Comp</masterLabel>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="inputString"    type="String" role="inputOnly" default=""  label="Input. String."/>
+            <property name="selectedValue"  type="String"                              label="Input/Output. Selected Value."/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
