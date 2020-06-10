@@ -1,21 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <assignments>
-        <name>Reset</name>
-        <label>Reset</label>
-        <locationX>857</locationX>
-        <locationY>75</locationY>
-        <assignmentItems>
-            <assignToReference>selectedValue</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue></stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>screen2</targetReference>
-        </connector>
-    </assignments>
     <constants>
         <name>booleanTrue</name>
         <dataType>Boolean</dataType>
@@ -39,114 +23,10 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <screens>
-        <name>screen1</name>
-        <label>Screen 1</label>
-        <locationX>587</locationX>
-        <locationY>75</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>screen11</targetReference>
-        </connector>
-        <fields>
-            <name>auraComp</name>
-            <extensionName>c:FlowAuraComp</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>InputString</name>
-                <value>
-                    <elementReference>stringAuraInput</elementReference>
-                </value>
-            </inputParameters>
-            <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>selectedValue</assignToReference>
-                <name>SelectedValue</name>
-            </outputParameters>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>screen11</name>
-        <label>Screen 1.1</label>
-        <locationX>713</locationX>
-        <locationY>75</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Reset</targetReference>
-        </connector>
-        <fields>
-            <name>displayText</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Selected Value &lt;/b&gt;= {!selectedValue}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>screen2</name>
-        <label>Screen 2</label>
-        <locationX>1013</locationX>
-        <locationY>75</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>screen21</targetReference>
-        </connector>
-        <fields>
-            <name>lwcComp1</name>
-            <extensionName>c:flowLwcComp</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>inputString</name>
-                <value>
-                    <elementReference>stringLwcInput</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>selectedValue</name>
-                <value>
-                    <elementReference>selectedValue</elementReference>
-                </value>
-            </inputParameters>
-            <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>selectedValue</assignToReference>
-                <name>selectedValue</name>
-            </outputParameters>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>screen21</name>
-        <label>Screen 2.1</label>
-        <locationX>1152</locationX>
-        <locationY>75</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>screen3</targetReference>
-        </connector>
-        <fields>
-            <name>displayText_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Selected Value &lt;/b&gt;= {!selectedValue}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
         <name>screen3</name>
         <label>Screen 3</label>
-        <locationX>1307</locationX>
-        <locationY>75</locationY>
+        <locationX>810</locationX>
+        <locationY>74</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -157,7 +37,7 @@
             <name>showAura</name>
             <dataType>Boolean</dataType>
             <defaultValue>
-                <elementReference>showLwc</elementReference>
+                <booleanValue>true</booleanValue>
             </defaultValue>
             <fieldText>showAura</fieldText>
             <fieldType>InputField</fieldType>
@@ -237,8 +117,8 @@
     <screens>
         <name>screen31</name>
         <label>Screen 3.1</label>
-        <locationX>1455</locationX>
-        <locationY>75</locationY>
+        <locationX>1065</locationX>
+        <locationY>74</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -254,10 +134,10 @@
         <locationX>202</locationX>
         <locationY>57</locationY>
         <connector>
-            <targetReference>screen1</targetReference>
+            <targetReference>screen3</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>outputString</name>
         <dataType>String</dataType>
