@@ -47,14 +47,14 @@
             <name>showLwc</name>
             <dataType>Boolean</dataType>
             <defaultValue>
-                <booleanValue>false</booleanValue>
+                <booleanValue>true</booleanValue>
             </defaultValue>
             <fieldText>showLwc</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>auraComp2</name>
+            <name>auraComp</name>
             <extensionName>c:FlowAuraComp</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -80,7 +80,7 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>lwcComp2</name>
+            <name>lwcCompp</name>
             <extensionName>c:flowLwcComp</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -124,7 +124,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>displayText_0_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Selected Value &lt;/b&gt;= {!selectedValue}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;Selected Value &lt;/b&gt;= {!selectedValue}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -138,6 +138,20 @@
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>lstInput</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>lstSelectedValue</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>outputString</name>
         <dataType>String</dataType>

@@ -10,6 +10,7 @@ export default class FlowLwcComp extends LightningElement {
 
    _copyInputToOutput() {
       this.selectedValue = this.inputString;
+      this.lstSelectedValue = this.lstInputString;
       const attributeChangeEvent1 = new FlowAttributeChangeEvent('selectedValue', this.inputString);
       this.dispatchEvent(attributeChangeEvent1);
    }
