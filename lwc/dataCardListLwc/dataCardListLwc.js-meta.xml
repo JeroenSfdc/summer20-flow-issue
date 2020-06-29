@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <description>Data Card List Lwc</description>
+    <isExposed>true</isExposed>
+    <masterLabel>Data Card List Lwc</masterLabel>
+    <targets>
+        <target>lightning__FlowScreen</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="fieldList" type="String[]" role="inputOnly" required="true" default="[]" label="Input. List of sObject fields"/>
+            <property name="lstQuoteLine" type="@salesforce/schema/SBQQ__QuoteLine__c[]" role="inputOnly" default="[]" label="Input. List of SBQQ__QuoteLine__c"/>
+            <property name="lstSelectedQuoteLine" type="@salesforce/schema/SBQQ__QuoteLine__c[]" default="[]" label="Input/Output. List of SBQQ__QuoteLine__c"/>
+            <property name="lstOpportunity" type="@salesforce/schema/Opportunity[]" role="inputOnly" default="[]" label="Input. List of Opportunity"/>
+            <property name="lstSelectedOpportunity" type="@salesforce/schema/Opportunity[]" default="[]" label="Input/Output. List of Opportunity"/>
+            <property name="lstAccountContactRelation" type="@salesforce/schema/AccountContactRelation[]" role="inputOnly" default="[]" label="Input. List of AccountContactRelation"/>
+            <property name="lstSelectedAccountContactRelation" type="@salesforce/schema/AccountContactRelation[]" default="[]" label="Input/Output. List of AccountContactRelation"/>
+            <property name="lstCase" type="@salesforce/schema/Case[]" role="inputOnly" default="[]" label="Input. List of Case"/>
+            <property name="lstSelectedCase" type="@salesforce/schema/Case[]" default="[]" label="Input/Output. List of Case"/>
+            <property name="lstVisitReport" type="@salesforce/schema/VisitReport__c[]" role="inputOnly" default="[]" label="Input. List of Visit Report"/>
+            <property name="lstSelectedVisitReport" type="@salesforce/schema/VisitReport__c[]" default="[]" label="Input/Output. List of Visit Report"/>
+            <property name="lstAccountShiptoAddress" type="@salesforce/schema/AccountShiptoAddress__c[]" role="inputOnly" default="[]" label="Input. List of AccountShiptoAddress"/>
+            <property name="lstSelectedAccountShiptoAddress" type="@salesforce/schema/AccountShiptoAddress__c[]" default="[]" label="Input/Output. List of AccountShiptoAddress"/>
+            <property name="lstProduct2" type="@salesforce/schema/Product2[]" role="inputOnly" default="[]" label="Input. List of Product2"/>
+            <property name="lstSelectedProduct2" type="@salesforce/schema/Product2[]" default="[]" label="Input/Output. List of Product2"/>
+            <property name="lstAdditionalTeamMember" type="@salesforce/schema/AdditionalTeamMember__c[]" role="inputOnly" default="[]" label="Input. List of AdditionalTeamMember"/>
+            <property name="lstSelectedAdditionalTeamMember" type="@salesforce/schema/AdditionalTeamMember__c[]" default="[]" label="Input/Output. List of AdditionalTeamMember"/>
+            <property name="maxRowSelection" type="Integer" role="inputOnly" label="Input. Number of items the user is allow to select"/>
+            <property name="hasSelectedRows" type="Boolean" role="outputOnly" label="Output. User selected one or more rows?"/>
+            <property name="selectedRecordId" type="string" role="outputOnly" label="Output. Record ID the selected record."/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

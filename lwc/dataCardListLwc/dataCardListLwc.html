@@ -1,0 +1,52 @@
+<template>
+    <template if:false={_loaded}>
+        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+    </template>
+    <template if:true={_loaded}>
+            <template if:true={_showAllSelect}>
+                <p>Select All</p>
+                <lightning-input id="selectedAllCheckbox" type="checkbox-button" label="Select All" onchange={_handleSelectAll}></lightning-input>
+            </template>
+            <ul class="slds-list--vertical slds-has-dividers--bottom">
+                <template for:each={_lstRecords} for:item="cardRecord">
+                    <li class="slds-list__item slds-p-top_x-small" key={cardRecord.Id}>
+                        <lightning-tile if:true={_isKeyId} label={cardRecord.Name} href={cardRecord.Id} type="media">
+                            <dl class="slds-list_vertical slds-wrap">
+                                <template if:true={_showSelect}>
+                                    <dt class="slds-item_label slds-truncate">
+                                        <lightning-input data-element="checkbox-button" data-id={cardRecord.Id} type="checkbox-button" label="Selected" onchange={_handleSelect}></lightning-input>
+                                    </dt>
+                                    <dd class="slds-item_detail slds-truncate"></dd>
+                                </template>
+                                <template for:each={columnsObject} for:item="column">
+                                    <div key={column.fieldName}>
+                                        <c-data-card-item-lwc field-name={column.fieldName} field-label={column.label} card-record={cardRecord}></c-data-card-item-lwc>
+                                    </div>
+                                </template>
+                            </dl>
+                        </lightning-tile>
+                        <lightning-tile if:false={_isKeyId}> <!-- Used for budget and sales summary on mobile -->
+                            <dl class="slds-list_vertical slds-wrap">
+                                <template if:true={_showSelect}>
+                                    <dt class="slds-item_label slds-truncate">
+                                        <lightning-input data-element="checkbox-button" data-id={cardRecord.Id} type="checkbox-button" label="Selected" onchange={_handleSelect}></lightning-input>
+                                    </dt>
+                                    <dd class="slds-item_detail slds-truncate"></dd>
+                                </template>
+                                <template for:each={columnsObject} for:item="column">
+                                    <div key={column.fieldName}>
+                                        <c-data-card-item-lwc type-attributes={column.typeAttributes}
+                                                              field-name={column.fieldName}
+                                                              field-label={column.label}
+                                                              type={column.type}
+                                                              card-record={cardRecord}>
+                                        </c-data-card-item-lwc>
+                                    </div>
+                                </template>
+                            </dl>
+                        </lightning-tile>
+                    </li>
+                </template> <!-- record list iterator -->
+            </ul>
+    </template> <!-- if loaded -->
+</template>

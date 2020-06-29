@@ -1,0 +1,45 @@
+<template>
+    <dl class="slds-list_horizontal slds-wrap">
+        <dt class="slds-item_label slds-text-color_weak slds-truncate">{fieldLabel}</dt>
+        <template if:true={_isGeneric}>
+            <dd class="slds-item_detail slds-truncate" ontouchstart={_handleShowPopover}>{_fieldValue}</dd>
+
+            <div if:true={_showPopover} class="popover-location">
+                <section class="slds-popover slds-nubbin_top-right" role="dialog">
+                    <button class="slds-button slds-button_icon slds-button_icon-small slds-float_right slds-popover__close">
+                        <lightning-icon icon-name="utility:close" size="xx-small" ontouchstart={_handleHidePopover}></lightning-icon>
+                    </button>
+                    <div class="slds-popover__body">
+                        <p>{_fieldValue}</p>
+                    </div>
+                </section>
+            </div>
+
+        </template>
+
+        <template if:true={_isCurrency}>
+            <dd class="slds-item_detail slds-truncate">
+                <lightning-formatted-number format-style="currency"
+                                            currency-code={_currencyCode}
+                                            minimum-fraction-digits={_minimumFractionDigits}
+                                            maximum-fraction-digits={_maximumFractionDigits}
+                                            value={_fieldValue}>
+                </lightning-formatted-number>
+            </dd>
+        </template>
+
+        <template if:true={_isBoolean}>
+            <dd class="slds-item_detail slds-truncate">
+                <label class="slds-checkbox_toggle slds-grid">
+                    <input type="checkbox" disabled={_true} checked={_booleanValue} />
+                    <span class="slds-checkbox_faux_container checkbox-size">
+                        <span class="slds-checkbox_faux"></span>
+                        <span class="slds-checkbox_on"></span>
+                        <span class="slds-checkbox_off"></span>
+                    </span>
+                </label>
+            </dd>
+        </template>
+
+    </dl>
+</template>
