@@ -1,0 +1,130 @@
+<!--
+Author:        Jeroen Burgers
+Company:       Salesforce
+User Story:    https://imcdgroup.atlassian.net/browse/SFDP-904
+Description:   Generic Wrapper component for the <lightning:datatabe> base component
+               Implements lightning:availableForFlowScreens for use in Lightning flows
+History:
+               11/11/2018 Created
+               14/11/2018 Added hideIdField - ability to suppress showing the ID field
+                          Added hideReferenceFields - ability to suppress relationship fields
+                          Added selectedRowId - if ONE record is selected by the user it provides the Record ID
+                          Added descriptions for Design file
+               27/11/2018 Added more objects: VisitReport, FollowupReport, MarketinfoBO, MarketinfoMarket
+               18/03/2018 Added more objects: Account
+               25/07/2019 Add more object: User By Gaurav
+               27/08/2019 Add more object: Additional Team Member By Gaurav
+               26/10/2019 Added helper method returnNoData() + updated init() handler when no data is received.
+               30/10/2019 Bumped API to 47.0
+                          Changed selectedRowIds from Private to Public
+                          Added selectedRowIds as design attribute.
+               27/01/2020 JR@NNc SFDP-5866 On Init in helper.setPreselectedRows set output object value and hasSelectedRows based on selectedRowIds. 
+                          This also disabled the need to call setOutput on Init with empty setRow
+               25/02/2020 JR@NNc SFDP-5521 Set selectedRowIds as output on select
+               26/02/2020 Gaurav: Added Custom metadata PackSizeTableOPH__mdt for https://imcdgroup.atlassian.net/browse/SFDP-951
+               27/03/2020 JR@NNc SFDP-3398 Added Contracted Price Object for input/output
+--> 
+<aura:component implements="lightning:availableForFlowScreens" controller="LightningDatatableWrapperCompController" access="global" description="Wrapper for lightning:datatable, exposable in Flows">
+
+    <!-- Global attributes --> 
+    <aura:attribute name="divStyle" type="String" access="public"/> <!-- e.g. height: 300px; -->
+    <aura:attribute name="IN_Account" type="Account[]" default="[]" access="public"/>
+    <aura:attribute name="IN_Contact" type="Contact[]" default="[]" access="public"/>
+    <aura:attribute name="IN_Case" type="Case[]" default="[]" access="public"/>
+    <aura:attribute name="IN_SBQQ__ContractedPrice__c" type="SBQQ__ContractedPrice__c[]" default="[]" access="public"/>
+    <aura:attribute name="IN_SBQQ__QuoteLine__c" type="SBQQ__QuoteLine__c[]" default="[]" access="public"/>
+    <aura:attribute name="IN_SBQQ__Quote__c" type="SBQQ__Quote__c[]" default="[]" access="public"/>
+    <aura:attribute name="IN_AccountShiptoAddress__c" type="AccountShiptoAddress__c[]" default="[]" access="public"/>
+    <aura:attribute name="IN_AccountContactRelation" type="AccountContactRelation[]" default="[]" access="public"/>
+    <aura:attribute name="IN_Opportunity" type="Opportunity[]" default="[]" access="public"/>
+    <aura:attribute name="IN_VisitReport__c" type="VisitReport__c[]" default="[]" access="public"/>
+    <aura:attribute name="IN_FollowUpReport__c" type="FollowUpReport__c[]" default="[]" access="public"/>
+    <aura:attribute name="IN_MarketInfoBO__c" type="MarketInfoBO__c[]" default="[]" access="public"/>
+    <aura:attribute name="IN_MarketInfoMarket__c" type="MarketInfoMarket__c[]" default="[]" access="public"/>
+    <aura:attribute name="IN_VisitReportOppty__c" type="VisitReportOppty__c[]" default="[]" access="public"/>
+    <aura:attribute name="IN_Product2" type="Product2[]" default="[]" access="public"/>
+    <aura:attribute name="IN_User" type="User[]" default="[]" access="public"/>
+    <aura:attribute name="IN_AdditionalTeamMember__c" type="AdditionalTeamMember__c[]" default="[]" access="public"/>
+    <aura:attribute name="IN_PackSizeTableOPH__mdt" type="PackSizeTableOPH__mdt[]" default="[]" access="public"/>
+    
+    <aura:attribute name="OUT_Account" type="Account[]" default="[]" access="public"/>
+    <aura:attribute name="OUT_Contact" type="Contact[]" default="[]" access="public"/>
+    <aura:attribute name="OUT_Case" type="Case[]" default="[]" access="public"/>
+    <aura:attribute name="OUT_SBQQ__ContractedPrice__c" type="SBQQ__ContractedPrice__c[]" default="[]" access="public"/>
+    <aura:attribute name="OUT_SBQQ__QuoteLine__c" type="SBQQ__QuoteLine__c[]" default="[]" access="public"/>
+    <aura:attribute name="OUT_SBQQ__Quote__c" type="SBQQ__Quote__c[]" default="[]" access="public"/>
+    <aura:attribute name="OUT_AccountShiptoAddress__c" type="AccountShiptoAddress__c[]" default="[]" access="public"/>
+    <aura:attribute name="OUT_AccountContactRelation" type="AccountContactRelation[]" default="[]" access="public"/>
+    <aura:attribute name="OUT_Opportunity" type="Opportunity[]" default="[]" access="public"/>
+    <aura:attribute name="OUT_VisitReport__c" type="VisitReport__c[]" default="[]" access="public"/>
+    <aura:attribute name="OUT_FollowUpReport__c" type="FollowUpReport__c[]" default="[]" access="public"/>
+    <aura:attribute name="OUT_MarketInfoBO__c" type="MarketInfoBO__c[]" default="[]" access="public"/>
+    <aura:attribute name="OUT_MarketInfoMarket__c" type="MarketInfoMarket__c[]" default="[]" access="public"/>
+    <aura:attribute name="OUT_VisitReportOppty__c" type="VisitReportOppty__c[]" default="[]" access="public"/>
+    <aura:attribute name="OUT_Product2" type="Product2[]" default="[]" access="public"/>
+    <aura:attribute name="OUT_User" type="User[]" default="[]" access="public"/>
+    <aura:attribute name="OUT_AdditionalTeamMember__c" type="AdditionalTeamMember__c[]" default="[]" access="public"/>
+    <aura:attribute name="OUT_PackSizeTableOPH__mdt" type="PackSizeTableOPH__mdt[]" default="[]" access="public"/>
+    
+    
+    <!-- these will have to stay -->
+    <aura:attribute name="keyField" type="String" access="public"/>
+    <aura:attribute name="showRowNumberColumn" type="Boolean" default="false" access="public"/>
+    <aura:attribute name="hideCheckboxColumn" type="Boolean" default="false" access="public"/>
+    <aura:attribute name="hideIdField" type="Boolean" default="false" access="public"/>
+    <aura:attribute name="hideReferenceFields" type="Boolean" default="false" access="public"/>
+    <aura:attribute name="maxRowSelection" type="Integer" default="200" access="public"/>
+    <aura:attribute name="hasSelectedRows" type="Boolean" default="false" access="public"/>
+    <aura:attribute name="selectedRowId" type="String"  access="public"/>
+    <aura:attribute name="enableSearch" type="Boolean" default="false" access="public"/>
+    <aura:attribute name="fieldList" type="String[]" default="[]" access="public"/>
+    <aura:attribute name="selectedRowIds" type="String[]" default="[]" access="public"/>
+
+    <!-- Private attributes -->
+    <aura:attribute name="sObjects" type="List" default="['Contact','Case', 'SBQQ__ContractedPrice__c','SBQQ__QuoteLine__c','SBQQ__Quote__c','Product2'
+                                                           ,'AccountShiptoAddress__c','AccountContactRelation'
+                                                           , 'Opportunity', 'VisitReport__c', 'FollowUpReport__c', 'Account'
+                                                           , 'MarketInfoBO__c', 'MarketInfoMarket__c', 'VisitReportOppty__c','User','AdditionalTeamMember__c','PackSizeTableOPH__mdt']" access="Private"/>
+    <aura:attribute name="IN_sObject" type="String" access="private"/>
+    <aura:attribute name="OUT_sObject" type="String" access="private"/>
+    <aura:attribute name="columns" type="List" access="private"/>
+    <aura:attribute name="data" type="List" access="private"/>
+    <aura:attribute name="backingData" type="List" access="private"/>
+    <aura:attribute name="filter" type="String" access="private"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+
+    <!-- library added for toast messages -->
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+
+    <aura:if isTrue="{!v.enableSearch}">
+        <lightning:layout verticalAlign="end" horizontalAlign="end">
+            <lightning:layoutItem flexibility="auto" padding="around-small">
+                <lightning:input type="text"
+                        onchange="{!c.filterData}"
+                        value="{!v.filter}"
+                        placeholder="Full-text search..."
+                />
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="auto" padding="around-small">
+                <lightning:button label="Add to Selection" iconName="utility:add" iconPosition="left" variant="brand" onclick="{!c.addSelection}"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="auto" padding="around-small">
+                <lightning:button label="Reset Selection" iconName="utility:close" iconPosition="left"  variant="brand" onclick="{!c.resetSelection}"/>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </aura:if>
+
+    <!-- here we need to pass v.data instead of specific object -->
+    <div style="{!v.divStyle}" aura:id="datatable-container">
+        <lightning:datatable aura:id="datatable" columns="{!v.columns}"
+                             data="{!v.data}"
+                             keyField="{!v.keyField}"
+                             showRowNumberColumn="{!v.showRowNumberColumn}"
+                             hideCheckboxColumn="{!v.hideCheckboxColumn}"
+                             onrowselection="{!c.updateSelectedRows}"
+                             maxRowSelection="{!v.maxRowSelection}"
+        />
+    </div>
+
+</aura:component>
